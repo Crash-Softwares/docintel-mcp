@@ -1,0 +1,15 @@
+# Smithery configuration for DocIntel MCP
+# Reference: https://smithery.ai/docs/config#smitheryyaml
+startCommand:
+  type: stdio
+  config:
+    command: python3
+    args:
+      - server.py
+    env:
+      GEMINI_API_KEY:
+        description: "Google Gemini API key for multimodal vision extraction (e.g. gemini-3.8-flash)"
+      OPENAI_API_KEY:
+        description: "OpenAI or OpenRouter API key for vision extraction (e.g. gpt-4o)"
+      ANTHROPIC_API_KEY:
+        description: "Anthropic Claude API key for vision extraction (e.g. claude-3-7-sonnet)"

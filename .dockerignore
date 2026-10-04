@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.git/
+.gitignore
+.env
+.venv
+venv/
+*_parsed_output/
+crops/
+*.log
+.DS_Store

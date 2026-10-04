@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "docintel-mcp"
+version = "1.0.0"
+description = "Production Document Intelligence & Vision MCP Server by Crash Softwares"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Crash Softwares", email = "crash.softwares@gmail.com" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.0.0",
+    "pymupdf>=1.24.0",
+    "pillow>=10.0.0",
+    "pydantic>=2.0.0",
+]
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "document-intelligence",
+    "pdf-parser",
+    "vision-llm",
+    "ocr",
+    "latex-extraction",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://crashsoftwares.com"
+Repository = "https://github.com/Crash-Softwares/docintel-mcp"
+Issues = "https://github.com/Crash-Softwares/docintel-mcp/issues"
+
+[project.scripts]
+docintel-mcp = "server:main"
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "server.py",
+]
