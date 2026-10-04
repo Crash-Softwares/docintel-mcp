@@ -1,5 +1,5 @@
 """
-Unit tests and pipeline validation for document-intelligent-parser
+Unit tests and pipeline validation for docintel-mcp
 """
 
 import json
@@ -26,7 +26,7 @@ from server import (
 )
 
 
-class TestDocumentIntelligentParser(unittest.TestCase):
+class TestDocIntelMCP(unittest.TestCase):
     def test_clean_text(self):
         raw = "Hello\x00\x08World!  \n\tThis is a test.   "
         cleaned = clean_text(raw)

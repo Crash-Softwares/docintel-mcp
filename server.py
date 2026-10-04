@@ -23,13 +23,32 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+def _load_env_fallback():
+    for p in [
+        Path.cwd() / ".env",
+        Path("/home/dextor/projects/code/objective/.env"),
+        Path.home() / ".env",
+    ]:
+        if p.is_file():
+            try:
+                for line in p.read_text().splitlines():
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        k, v = k.strip(), v.strip().strip("'\"")
+                        if k and (k not in os.environ or os.environ[k].startswith("${")):
+                            os.environ[k] = v
+            except Exception:
+                pass
+_load_env_fallback()
+
 # Configure logging to stderr (stdout is reserved for MCP JSON-RPC protocol)
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
     stream=sys.stderr,
 )
-logger = logging.getLogger("document-intelligent-parser")
+logger = logging.getLogger("docintel-mcp")
 
 # Graceful library imports
 try:
@@ -1029,7 +1048,7 @@ class DocumentParserEngine:
 
 if HAS_FASTMCP:
     mcp_app = FastMCP(
-        name="document-intelligent-parser",
+        name="docintel-mcp",
         dependencies=["pymupdf", "pillow", "pydantic"],
     )
 
@@ -1185,7 +1204,7 @@ if HAS_FASTMCP:
         return json.dumps(
             {
                 "status": "healthy",
-                "server_name": "document-intelligent-parser",
+                "server_name": "docintel-mcp",
                 "has_pymupdf": HAS_PYMUPDF,
                 "has_pillow": HAS_PILLOW,
                 "has_fastmcp": HAS_FASTMCP,
@@ -1208,7 +1227,7 @@ def run_cli_mode():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Document Intelligent Parser MCP Server / CLI"
+        description="DocIntel MCP Server / CLI"
     )
     parser.add_argument("file_path", nargs="?", help="Path to PDF file to parse")
     parser.add_argument("--output", "-o", help="Output directory path")
@@ -1263,7 +1282,7 @@ def run_stdio_jsonrpc_fallback():
     Fallback Standard MCP stdio JSON-RPC loop if FastMCP is not installed.
     Guarantees that the server responds to MCP initialize, tools/list, and tools/call!
     """
-    logger.info("Starting document-intelligent-parser via stdio JSON-RPC protocol...")
+    logger.info("Starting docintel-mcp via stdio JSON-RPC protocol...")
     
     tools_definitions = [
         {
@@ -1330,7 +1349,7 @@ def run_stdio_jsonrpc_fallback():
                     "result": {
                         "protocolVersion": "2024-11-05",
                         "serverInfo": {
-                            "name": "document-intelligent-parser",
+                            "name": "docintel-mcp",
                             "version": "1.0.0"
                         },
                         "capabilities": {
