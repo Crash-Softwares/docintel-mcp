@@ -428,6 +428,11 @@ def call_vision(image_path: str, prompt: Optional[str] = None) -> str:
             return False, f"[OpenAI HTTP {e.code}: {err_msg[:120]}]"
         except Exception as e:
             logger.warning(f"OpenAI Vision error: {e}")
+            if gemini_key:
+                logger.info("OpenAI Vision error encountered; falling back to Gemini...")
+                ok_g, text_g = _call_gemini()
+                if ok_g:
+                    return ok_g, text_g
             return False, f"[OpenAI error: {str(e)}]"
 
     def _call_gemini() -> Tuple[bool, str]:

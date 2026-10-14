@@ -9,7 +9,7 @@ description = "Production Document Intelligence & Vision MCP Server by Crash Sof
 readme = "README.md"
 license = "MIT"
 authors = [
-    { name = "Crash Softwares", email = "crash.softwares@gmail.com" },
+    { name = "Crash Softwares", email = "support@crashsoftwares.com" },
 ]
 requires-python = ">=3.10"
 dependencies = [
